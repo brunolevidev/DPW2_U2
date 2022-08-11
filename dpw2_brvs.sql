@@ -73,7 +73,7 @@ CREATE TABLE `medicos` (
 LOCK TABLES `medicos` WRITE;
 /*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
 INSERT INTO `medicos` VALUES
-(1000,'Remigio','Soria','Vega','Oftalmología',1,'Progweb2#');
+(0,'Remigio','Soria','Vega','Oftalmología',1,'Progweb2#');
 /*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `pacientes` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pacientes_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,10 @@ CREATE TABLE `pacientes` (
 LOCK TABLES `pacientes` WRITE;
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
 INSERT INTO `pacientes` VALUES
-(1000,'Bruno','Velazquez','Sanchez','Progweb2#');
+(1001,'Lidia ','Camacho ','Galayo','60&Cd0Rq'),
+(1002,'Normando ','Ortiz ','Mendoza','59kh1LQ$'),
+(1003,'Enrico Leandro ','Reyeros ','Moreno','!wB!4$58'),
+(9999,'Bruno','Velazquez','Sanchez','Progweb2#');
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -115,4 +118,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-10  0:39:30
+-- Dump completed on 2022-08-11 14:52:10
