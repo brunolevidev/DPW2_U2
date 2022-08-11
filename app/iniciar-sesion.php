@@ -31,6 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if($usuario == $row['id'] && $password == $row['password']){
             setcookie('id_usuario', $row['id'], time() + (86400 * 30), "/");
+            setcookie('tipo_usuario', $tipo_usuario, time() + (86400 * 30), "/");
             header('Location: http://'.$base_url.'/dashboard.php');
         }
         else {

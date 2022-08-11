@@ -1,7 +1,7 @@
 <nav>
   <div>
     <span>
-      <a href="/">Inicio</a>
+      <a href="/dashboard.php">Inicio</a>
     </span>
     <span>
       <a href="/registro-paciente.php">Registrarse</a>
