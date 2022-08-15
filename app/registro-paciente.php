@@ -1,6 +1,8 @@
 <?php 
-
 include './templates/loadenvvars.php'; 
+if(isset($_COOKIE['id_usuario'])){
+    header('Location: http://'.$base_url.'/dashboard.php');
+}
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
@@ -29,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['errors'] = 'La contraseña no coincide';
         } else {
 
-            if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $password)){
+            if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/", $password) && strlen($password) < 8){
                 $_SESSION['errors'] = 'La contraseña debe contener por lo menos 8 caracteres, una mayúscula, un número y un símbolo especial';
             } else {
 
@@ -46,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $stmt->execute();
 
-                    $_SESSION['success'] = 'Paciente agregado con éxito!';
+                    $_SESSION['success'] = 'Paciente agregado con éxito!' . ' tu id de paciente es: ' . $db->lastInsertId();
 
                     $db = null;
 

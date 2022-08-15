@@ -1,7 +1,7 @@
 <?php include './templates/loadenvvars.php'; ?>
 <?php include './templates/valida-sesion.php'; ?>
 <?php include './templates/head.php'; ?>
-
+<?php include './templates/navbar.php'; ?>
 <?php 
 
 try {
@@ -17,13 +17,6 @@ try {
     $stmt->execute();
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($tipo_usuario == 'pacientes') {
-        include './templates/private/navbar.php';
-    }
-    else if($tipo_usuario == 'medicos'){
-        include './templates/private/navbar-medico.php';
-    }
 
     ?>
     
