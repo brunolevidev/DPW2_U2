@@ -63,35 +63,72 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <?php include './templates/head.php'; ?>
 <?php include './templates/navbar.php'; ?>
-<h1>Registro de paciente</h1>
-<form action="/registro-paciente.php" method="post" enctype="multipart/form-data">
-    <div>
-        <?php echo isset($_SESSION['errors']) ? $_SESSION['errors'] : ''; ?>
-        <?php echo isset($_SESSION['success']) ? $_SESSION['success'] : ''; ?>
-        <?php echo isset($_SESSION['dberror']) ? $_SESSION['dberror'] : ''; ?>
+<div class="container pt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-6">
+            <form action="/registro-paciente.php" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Registro de paciente</h5>
+                    </div>
+                    <div class="card-body">
+                        <?php 
+                        if(isset($_SESSION['errors'])) {
+                            ?>
+                            <div class="p-2">
+                                <div class="alert alert-danger">
+                                    <?php echo $_SESSION['errors'];?>
+                                </div>
+                            </div>
+                            <?php
+                        } ?>
+                        <?php 
+                        if(isset($_SESSION['success'])) {
+                            ?>
+                            <div class="p-2">
+                                <div class="alert alert-success">
+                                    <?php echo $_SESSION['success'];?>
+                                </div>
+                            </div>
+                            <?php
+                        } ?>
+                        <?php 
+                        if(isset($_SESSION['dberror'])) {
+                            ?>
+                            <div class="p-2">
+                                <div class="alert alert-warning">
+                                    <?php echo $_SESSION['dberror'];?>
+                                </div>
+                            </div>
+                            <?php
+                        } ?>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido_paterno" class="form-label">Apellido paterno</label>
+                            <input type="text" class="form-control" name="apellido_paterno" id="apellido_paterno">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido_materno" class="form-label">Apellido materno</label>
+                            <input type="text" class="form-control" name="apellido_materno" id="apellido_materno">
+                        </div>
+                        <div class="mb-3">
+                            <label for="contraseña" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmar_contraseña" class="form-label">Confirmar contraseña</label>
+                            <input type="password" class="form-control" name="confirmar_password" id="confirmar_password">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Registrarse como paciente</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre">
-    </div>
-    <div>
-        <label for="apellido_paterno">Apellido paterno</label>
-        <input type="text" name="apellido_paterno" id="apellido_paterno">
-    </div>
-    <div>
-        <label for="apellido_materno">Apellido materno</label>
-        <input type="text" name="apellido_materno" id="apellido_materno">
-    </div>
-    <div>
-        <label for="contraseña">Contraseña</label>
-        <input type="password" name="password" id="password">
-    </div>
-    <div>
-        <label for="confirmar_contraseña">Confirmar contraseña</label>
-        <input type="password" name="confirmar_password" id="confirmar_password">
-    </div>
-    <div>
-        <button type="submit">Registrarse como paciente</button>
-    </div>
-</form>
+</div>
 <?php include './templates/footer.php'; ?>

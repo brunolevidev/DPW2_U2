@@ -48,68 +48,77 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <?php include './templates/head.php'; ?>
 <?php include './templates/navbar.php'; ?>
-<h1>Modificar cita!</h1>
-<form action="/modificar-cita.php" method="post" enctype="multipart/form-data">
-    <div>
-        <?php echo isset($_SESSION['errors']) ? $_SESSION['errors'] : ''; ?>
-        <?php echo isset($_SESSION['success']) ? $_SESSION['success'] : ''; ?>
-        <?php echo isset($_SESSION['dberror']) ? $_SESSION['dberror'] : ''; ?>
+<div class="container pt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-6">
+            <form action="/modificar-cita.php" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Modificar cita</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" name="id_cita" id="id_cita" value="<?php echo $_GET['id_cita']; ?>">
+                        <?php 
+                        if($_COOKIE['tipo_usuario'] == 'medicos'){ 
+                            try {
+                                $id_cita = $_GET['id_cita'];
+                                $db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
+                                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $db->prepare("SELECT * FROM citas WHERE id = :id_cita");
+                                $stmt->bindParam(':id_cita', $id_cita);
+                                $stmt->execute();
+                                $cita = $stmt->fetch();
+                        
+                                ?>
+                                <div class="mb-3">
+                                    <label for="paciente" class="form-label">Paciente</label>
+                                    <select name="id_paciente" id="id_paciente" class="form-select">
+                                    <?php 
+                                    try {
+                                        $db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
+                                        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                        $stmt = $db->prepare("SELECT * FROM pacientes");
+                                        $stmt->execute();
+                                        $pacientes = $stmt->fetchAll();
+                                
+                                        foreach($pacientes as $paciente){
+                                            ?>
+                                            <option value="<?php echo $paciente['id']?>"><?php printf('%s %s %s', $paciente['nombre'], $paciente['apellido_paterno'], $paciente['apellido_materno']) ?></option>
+                                            <?php
+                                        }
+
+                                        $db = null;
+
+                                    } catch(PDOException $e) {
+                                        echo $e->getMessage();
+                                    }
+                                    ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha" class="form-label">Fecha de la cita</label>
+                                    <input type="text" class="form-control" name="fecha" id="fecha" placeholder="22-08-25" value="<?php echo $cita['fecha']?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="hora" class="form-label">Hora de la cita</label>
+                                    <input type="text" class="form-control" name="hora" id="hora" placeholder="08:15" value="<?php echo $cita['hora']?>">
+                                </div>
+                                <?php
+
+                                $db = null;
+
+                            } catch(PDOException $e) {
+                                echo $e->getMessage();
+                            }
+                        } ?>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Modificar cita</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <input type="hidden" name="id_cita" id="id_cita" value="<?php echo $_GET['id_cita']; ?>">
-    <?php 
-    if($_COOKIE['tipo_usuario'] == 'medicos'){ 
-        try {
-            $id_cita = $_GET['id_cita'];
-            $db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $db->prepare("SELECT * FROM citas WHERE id = :id_cita");
-            $stmt->bindParam(':id_cita', $id_cita);
-            $stmt->execute();
-            $cita = $stmt->fetch();
-    
-            ?>
-            <div>
-                <label for="paciente">Paciente</label>
-                <select name="id_paciente" id="id_paciente">
-                <?php 
-                try {
-                    $db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
-                    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $stmt = $db->prepare("SELECT * FROM pacientes");
-                    $stmt->execute();
-                    $pacientes = $stmt->fetchAll();
-            
-                    foreach($pacientes as $paciente){
-                        ?>
-                        <option value="<?php echo $paciente['id']?>"><?php printf('%s %s %s', $paciente['nombre'], $paciente['apellido_paterno'], $paciente['apellido_materno']) ?></option>
-                        <?php
-                    }
+</div>
 
-                    $db = null;
-
-                } catch(PDOException $e) {
-                    echo $e->getMessage();
-                }
-                ?>
-                </select>
-            </div>
-            <div>
-                <label for="fecha">Fecha de la cita</label>
-                <input type="text" name="fecha" id="fecha" placeholder="22-08-25" value="<?php echo $cita['fecha']?>">
-            </div>
-            <div>
-                <label for="hora">Hora de la cita</label>
-                <input type="text" name="hora" id="hora" placeholder="08:15" value="<?php echo $cita['hora']?>">
-            </div>
-            <div>
-                <button type="submit">Modificar cita</button>
-            </div>
-            <?php
-
-            $db = null;
-
-        } catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-    } ?>
 <?php include './templates/footer.php'; ?>
