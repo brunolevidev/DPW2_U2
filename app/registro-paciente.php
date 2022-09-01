@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container pt-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-6">
-            <form action="/registro-paciente.php" method="post" enctype="multipart/form-data">
+            <form action="/registro-paciente.php" method="post" enctype="multipart/form-data" id="registroPaciente">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Registro de paciente</h5>
@@ -124,7 +124,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Registrarse como paciente</button>
+                    <button class="g-recaptcha btn btn-primary" 
+                            data-sitekey="6Lc0VMQhAAAAADp9co0WhZDnuwbBVRvJrUDVevye" 
+                            data-callback='onSubmit' 
+                            data-action='submit'>
+                            Registrarse como paciente
+                    </button>
                     </div>
                 </div>
             </form>

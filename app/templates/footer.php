@@ -13,6 +13,5 @@
             </div>
       </div>
 </footer>
-<script src="./assets/dist/main.js"></script>
 </body>
 </html>
